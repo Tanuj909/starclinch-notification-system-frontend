@@ -32,7 +32,7 @@ const TemplateModal = ({
 
   // WhatsApp state
   const [waTemplateName, setWaTemplateName] = useState("");
-  const [waLanguage, setWaLanguage] = useState("en");
+  const [waLanguage, setWaLanguage] = useState("en_US");
   const [waParameters, setWaParameters] = useState("");
 
   // UI state
@@ -61,7 +61,7 @@ const TemplateModal = ({
           setWebPushBody(content.body || "");
         } else if (channelCode === "WHATSAPP") {
           setWaTemplateName(content.template_name || "");
-          setWaLanguage(content.language || "en");
+          setWaLanguage(content.language || "en_US");
           const params = Array.isArray(content.parameters)
             ? content.parameters.join(", ")
             : typeof content.parameters === "string"
@@ -78,7 +78,7 @@ const TemplateModal = ({
         setWebPushTitle("");
         setWebPushBody("");
         setWaTemplateName("");
-        setWaLanguage("en");
+        setWaLanguage("en_US");
         setWaParameters("");
       }
     }
@@ -140,7 +140,7 @@ const TemplateModal = ({
 
         contentPayload = {
           template_name: waTemplateName.trim(),
-          language: waLanguage.trim() || "en",
+          language: waLanguage.trim() || "en_US",
           parameters: paramsArray,
         };
       }
@@ -396,12 +396,12 @@ const TemplateModal = ({
                     type="text"
                     value={waLanguage}
                     onChange={(e) => setWaLanguage(e.target.value)}
-                    placeholder="en"
+                    placeholder="en_US"
                     required
                     className="w-full px-3.5 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
                   />
                   <span className="text-[11px] text-gray-400 mt-1 block">
-                    e.g. <code className="text-purple-600 font-mono">en</code> or <code className="text-purple-600 font-mono">hi</code>
+                    e.g. <code className="text-purple-600 font-mono">en_US</code> or <code className="text-purple-600 font-mono">hi</code>
                   </span>
                 </div>
               </div>
