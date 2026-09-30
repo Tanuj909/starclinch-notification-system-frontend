@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { registerUser } from "../../services/authService";
+import { useAuth } from "../../context/AuthContext"; // in case they want to auto-login
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -20,13 +21,10 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const data = await login(email, password);
-
-      if (data.user?.role === "ADMIN") {
-        navigate("/admin", { replace: true });
-      } else {
-        navigate("/dashboard", { replace: true });
-      }
+      await registerUser(email, phoneNumber, password);
+      
+      // On success, either login or go to login page
+      navigate("/login", { replace: true });
     } catch (err) {
       console.error(err);
 
@@ -34,8 +32,17 @@ const Login = () => {
         setError(err.response.data.detail);
       } else if (err.response?.data?.message) {
         setError(err.response.data.message);
+      } else if (err.response?.data) {
+        // usually django validation errors
+        const errObj = err.response.data;
+        const keys = Object.keys(errObj);
+        if (keys.length > 0 && Array.isArray(errObj[keys[0]])) {
+           setError(errObj[keys[0]][0]);
+        } else {
+           setError("Registration failed. Please check your details.");
+        }
       } else {
-        setError("Login failed. Please check your email and password.");
+        setError("Registration failed. Please try again later.");
       }
     } finally {
       setLoading(false);
@@ -58,10 +65,10 @@ const Login = () => {
           <div className="text-center mb-8">
 
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
-              Welcome back
+              Create an account
             </h1>
             <p className="text-sm text-gray-500 mt-2">
-              Please enter your details to sign in
+              Sign up to get started
             </p>
           </div>
 
@@ -98,6 +105,23 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com"
+                  required
+                  className="w-full px-4 py-3 bg-purple-50/30 border border-purple-100 rounded-2xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Phone Number Field */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5 ml-1">
+                Phone Number
+              </label>
+              <div className="relative">
+                <input
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="+919876543210"
                   required
                   className="w-full px-4 py-3 bg-purple-50/30 border border-purple-100 rounded-2xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
                 />
@@ -165,19 +189,19 @@ const Login = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     />
                   </svg>
-                  <span>Signing in...</span>
+                  <span>Registering...</span>
                 </>
               ) : (
-                <span>Sign in</span>
+                <span>Register</span>
               )}
             </button>
           </form>
 
-          {/* Register Link */}
+          {/* Login Link */}
           <div className="mt-6 text-center text-sm text-gray-500">
-            New user?{" "}
-            <Link to="/register" className="text-purple-600 font-semibold hover:text-purple-700 transition-colors">
-              Register
+            Already have an account?{" "}
+            <Link to="/login" className="text-purple-600 font-semibold hover:text-purple-700 transition-colors">
+              Login
             </Link>
           </div>
 
@@ -187,4 +211,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
