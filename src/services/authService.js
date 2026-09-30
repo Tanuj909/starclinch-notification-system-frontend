@@ -19,3 +19,12 @@ export const logoutUser = async () => {
   // AuthContext.jsx will call clearAuthData() in its finally block.
   return response.data;
 };
+
+export const registerUser = async (email, phone_number, password) => {
+  const response = await api.post("/auth/register/", {
+    email,
+    phone_number,
+    password,
+  });
+  return response.data;
+};
