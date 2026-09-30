@@ -80,12 +80,6 @@ const NotificationCell = ({
             </span>
           )}
 
-          {/* Variables count badge */}
-          {template.variable_mapping && Object.keys(template.variable_mapping).length > 0 && (
-            <span className="text-[10px] font-mono text-purple-600 bg-purple-50 px-2 py-0.5 rounded-md border border-purple-100" title="Variables configured">
-              {Object.keys(template.variable_mapping).length} vars
-            </span>
-          )}
         </div>
 
         {/* Content Snippet */}

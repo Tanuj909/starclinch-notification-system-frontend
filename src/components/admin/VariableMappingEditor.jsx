@@ -73,14 +73,14 @@ const VariableMappingEditor = ({ value = {}, onChange }) => {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div>
-          <label className="block text-sm font-semibold text-gray-700">
+          <label className="block text-sm font-medium text-gray-700">
             Variable Mapping
           </label>
         </div>
         <button
           type="button"
           onClick={handleAddRow}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-xl transition-all cursor-pointer active:scale-95 shadow-sm"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-purple-700 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors cursor-pointer"
         >
           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
@@ -90,17 +90,11 @@ const VariableMappingEditor = ({ value = {}, onChange }) => {
       </div>
 
       {pairs.length === 0 ? (
-        <p className="text-xs text-gray-500 italic">
-          Add variables only if your template contains dynamic placeholders.
+        <p className="text-xs text-gray-400 italic">
+          No variables mapped.
         </p>
       ) : (
         <div className="space-y-2">
-          <div className="grid grid-cols-12 gap-2 text-[11px] font-semibold text-gray-500 uppercase tracking-wider px-1">
-            <div className="col-span-5">Variable Key</div>
-            <div className="col-span-6">Context Path</div>
-            <div className="col-span-1 text-center"></div>
-          </div>
-
           {pairs.map((pair, index) => (
             <div key={index} className="grid grid-cols-12 gap-2 items-center">
               <div className="col-span-5 relative">
@@ -108,8 +102,8 @@ const VariableMappingEditor = ({ value = {}, onChange }) => {
                   type="text"
                   value={pair.key}
                   onChange={(e) => handleChangeKey(index, e.target.value)}
-                  placeholder="e.g. user_name"
-                  className="w-full px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-xl text-xs font-mono text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
+                  placeholder="Key (e.g. user_name)"
+                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors"
                 />
               </div>
 
@@ -118,8 +112,8 @@ const VariableMappingEditor = ({ value = {}, onChange }) => {
                   type="text"
                   value={pair.path}
                   onChange={(e) => handleChangePath(index, e.target.value)}
-                  placeholder="e.g. user.name"
-                  className="w-full px-3 py-2 bg-gray-50/50 border border-gray-200 rounded-xl text-xs font-mono text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
+                  placeholder="Path (e.g. user.name)"
+                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors"
                 />
               </div>
 
@@ -127,29 +121,16 @@ const VariableMappingEditor = ({ value = {}, onChange }) => {
                 <button
                   type="button"
                   onClick={() => handleRemoveRow(index)}
-                  className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                  className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
                   title="Remove mapping"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
             </div>
           ))}
-
-          <div className="pt-1">
-            <button
-              type="button"
-              onClick={handleAddRow}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-purple-600 hover:text-purple-700 hover:underline cursor-pointer"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-              </svg>
-              Add another variable
-            </button>
-          </div>
         </div>
       )}
     </div>

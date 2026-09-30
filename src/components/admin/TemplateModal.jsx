@@ -204,39 +204,33 @@ const TemplateModal = ({
     <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6">
       <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden my-8 animate-fade-in">
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-gradient-to-r from-purple-50/70 via-white to-purple-50/30">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 bg-white">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-100 text-purple-700 border border-purple-200 uppercase">
-                {channel?.name || channelCode}
-              </span>
-              <span className="text-xs font-semibold text-gray-400">•</span>
-              <span className="text-[13px] font-semibold text-gray-600">
-                Trigger: <span className="text-gray-900 font-bold">{trigger?.name}</span>
-              </span>
-            </div>
-            <h2 className="text-lg font-bold text-gray-900 mt-1">
-              {isEditing ? "Edit Template" : "Configure New Template"}
+            <h2 className="text-xl font-semibold text-gray-800">
+              {isEditing ? "Edit Template" : "New Template"}
             </h2>
+            <p className="text-sm text-gray-500 mt-1">
+              {channel?.name || channelCode} • Trigger: {trigger?.name}
+            </p>
           </div>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-gray-600">
-                {isEnabled ? "Enabled" : "Disabled"}
+              <span className="text-sm font-medium text-gray-600">
+                {isEnabled ? "Active" : "Inactive"}
               </span>
               <button
                 type="button"
                 role="switch"
                 aria-checked={isEnabled}
                 onClick={() => setIsEnabled(!isEnabled)}
-                className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                className={`relative inline-flex h-6 w-11 items-center flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
                   isEnabled ? "bg-purple-600" : "bg-gray-200"
                 }`}
               >
                 <span
                   className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                    isEnabled ? "translate-x-4" : "translate-x-0"
+                    isEnabled ? "translate-x-6" : "translate-x-1"
                   }`}
                 />
               </button>
@@ -244,8 +238,7 @@ const TemplateModal = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
-              aria-label="Close"
+              className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -305,7 +298,7 @@ const TemplateModal = ({
           {channelCode === "EMAIL" && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Email Subject <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -314,12 +307,12 @@ const TemplateModal = ({
                   onChange={(e) => setEmailSubject(e.target.value)}
                   placeholder="e.g. Welcome {{user_name}}"
                   required
-                  className="w-full px-3.5 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
+                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Email Body <span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -328,7 +321,7 @@ const TemplateModal = ({
                   onChange={(e) => setEmailBody(e.target.value)}
                   placeholder="Hello {{user_name}},&#10;&#10;You have successfully logged in."
                   required
-                  className="w-full px-3.5 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all font-sans"
+                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-3xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors font-sans"
                 />
               </div>
             </div>
@@ -338,7 +331,7 @@ const TemplateModal = ({
           {channelCode === "WEB_PUSH" && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Push Title <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -347,21 +340,21 @@ const TemplateModal = ({
                   onChange={(e) => setWebPushTitle(e.target.value)}
                   placeholder="e.g. Security Alert: New Login"
                   required
-                  className="w-full px-3.5 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
+                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Push Message Body <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   rows={4}
                   value={webPushBody}
                   onChange={(e) => setWebPushBody(e.target.value)}
-                  placeholder="e.g. Hi {{user_name}}, a login event was recorded from your account."
+                  placeholder="e.g. Hi {{user_name}}, a login event was recorded."
                   required
-                  className="w-full px-3.5 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
+                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-3xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors"
                 />
               </div>
             </div>
@@ -372,7 +365,7 @@ const TemplateModal = ({
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     WhatsApp Template Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -381,15 +374,12 @@ const TemplateModal = ({
                     onChange={(e) => setWaTemplateName(e.target.value)}
                     placeholder="e.g. login_notification"
                     required
-                    className="w-full px-3.5 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors"
                   />
-                  <span className="text-[10px] text-gray-400 mt-1 block">
-                    Exact template name registered in Meta.
-                  </span>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Language Code <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -398,16 +388,13 @@ const TemplateModal = ({
                     onChange={(e) => setWaLanguage(e.target.value)}
                     placeholder="en_US"
                     required
-                    className="w-full px-3.5 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors"
                   />
-                  <span className="text-[11px] text-gray-400 mt-1 block">
-                    e.g. <code className="text-purple-600 font-mono">en_US</code> or <code className="text-purple-600 font-mono">hi</code>
-                  </span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Parameters (Comma-separated)
                 </label>
                 <input
@@ -415,11 +402,8 @@ const TemplateModal = ({
                   value={waParameters}
                   onChange={(e) => setWaParameters(e.target.value)}
                   placeholder="e.g. {{user_name}}, {{login_time}}"
-                  className="w-full px-3.5 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
+                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors"
                 />
-                <span className="text-[11px] text-gray-400 mt-1 block">
-                  Ordered positional variables passed to WhatsApp template.
-                </span>
               </div>
             </div>
           )}
