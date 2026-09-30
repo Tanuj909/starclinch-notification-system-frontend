@@ -204,36 +204,58 @@ const TemplateModal = ({
     <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6">
       <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden my-8 animate-fade-in">
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 bg-gradient-to-r from-purple-50/70 via-white to-purple-50/30">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-gradient-to-r from-purple-50/70 via-white to-purple-50/30">
           <div>
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-100 text-purple-700 border border-purple-200 uppercase">
                 {channel?.name || channelCode}
               </span>
               <span className="text-xs font-semibold text-gray-400">•</span>
-              <span className="text-xs font-semibold text-gray-600">
+              <span className="text-[13px] font-semibold text-gray-600">
                 Trigger: <span className="text-gray-900 font-bold">{trigger?.name}</span>
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mt-1">
+            <h2 className="text-lg font-bold text-gray-900 mt-1">
               {isEditing ? "Edit Template" : "Configure New Template"}
             </h2>
           </div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-xl transition-colors cursor-pointer"
-            aria-label="Close"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-5">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-gray-600">
+                {isEnabled ? "Enabled" : "Disabled"}
+              </span>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={isEnabled}
+                onClick={() => setIsEnabled(!isEnabled)}
+                className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                  isEnabled ? "bg-purple-600" : "bg-gray-200"
+                }`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                    isEnabled ? "translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </button>
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+              aria-label="Close"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Modal Body */}
-        <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6 max-h-[75vh] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4 max-h-[75vh] overflow-y-auto">
           {error && (
             <div className="p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm rounded-2xl flex items-start gap-2.5">
               <svg className="w-5 h-5 flex-shrink-0 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -275,32 +297,7 @@ const TemplateModal = ({
             </div>
           )}
 
-          {/* Enabled Status Switch */}
-          <div className="flex items-center justify-between p-4 bg-purple-50/40 border border-purple-100 rounded-2xl">
-            <div>
-              <label className="text-sm font-semibold text-gray-900 block">
-                Template Status
-              </label>
-              <span className="text-xs text-gray-500">
-                {isEnabled ? "Notifications will be triggered." : "Template is disabled and inactive."}
-              </span>
-            </div>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={isEnabled}
-              onClick={() => setIsEnabled(!isEnabled)}
-              className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                isEnabled ? "bg-purple-600" : "bg-gray-200"
-              }`}
-            >
-              <span
-                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                  isEnabled ? "translate-x-5" : "translate-x-0"
-                }`}
-              />
-            </button>
-          </div>
+
 
           {/* Channel Specific Fields */}
 
@@ -386,8 +383,8 @@ const TemplateModal = ({
                     required
                     className="w-full px-3.5 py-2.5 bg-gray-50/50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-600 focus:bg-white transition-all"
                   />
-                  <span className="text-[11px] text-gray-400 mt-1 block">
-                    Exact template name registered in WhatsApp Business / Meta.
+                  <span className="text-[10px] text-gray-400 mt-1 block">
+                    Exact template name registered in Meta.
                   </span>
                 </div>
 
@@ -436,13 +433,13 @@ const TemplateModal = ({
           </div>
 
           {/* Modal Footer Actions */}
-          <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3 pt-6 border-t border-gray-100">
+          <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3 pt-4 border-t border-gray-100 mt-2">
             <div>
               {isEditing && !showDeleteConfirm && (
                 <button
                   type="button"
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="w-full sm:w-auto px-4 py-2.5 text-xs font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 border border-red-200 rounded-xl transition-all cursor-pointer"
+                  className="w-full sm:w-auto px-4 py-2 text-xs font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 border border-red-200 rounded-xl transition-all cursor-pointer"
                 >
                   Delete Template
                 </button>

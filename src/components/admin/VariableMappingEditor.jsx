@@ -76,9 +76,6 @@ const VariableMappingEditor = ({ value = {}, onChange }) => {
           <label className="block text-sm font-semibold text-gray-700">
             Variable Mapping
           </label>
-          <p className="text-xs text-gray-500 mt-0.5">
-            Map template placeholders (e.g. <code className="bg-gray-100 px-1 py-0.5 rounded text-purple-600 font-mono">{"{{user_name}}"}</code>) to payload context paths.
-          </p>
         </div>
         <button
           type="button"
@@ -93,19 +90,9 @@ const VariableMappingEditor = ({ value = {}, onChange }) => {
       </div>
 
       {pairs.length === 0 ? (
-        <div className="p-4 bg-gray-50/70 border border-dashed border-gray-200 rounded-2xl text-center">
-          <p className="text-xs text-gray-400">No variable mappings defined.</p>
-          <button
-            type="button"
-            onClick={handleAddRow}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-purple-600 hover:text-purple-700 bg-white hover:bg-purple-50 border border-purple-200 rounded-xl mt-2.5 transition-all cursor-pointer shadow-sm active:scale-95"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-            </svg>
-            Add first variable mapping
-          </button>
-        </div>
+        <p className="text-xs text-gray-500 italic">
+          Add variables only if your template contains dynamic placeholders.
+        </p>
       ) : (
         <div className="space-y-2">
           <div className="grid grid-cols-12 gap-2 text-[11px] font-semibold text-gray-500 uppercase tracking-wider px-1">
